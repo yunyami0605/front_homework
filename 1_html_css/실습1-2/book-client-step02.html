@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>도서 등록</title>
+
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+      }
+
+      h1 {
+        color: black;
+      }
+
+      form {
+        padding: 10px;
+        border: 1px solid #ccc;
+        width: 400px;
+      }
+
+      label {
+        display: inline-block;
+        width: 80px;
+        margin-bottom: 10px;
+      }
+
+      input {
+        padding: 5px;
+        width: 250px;
+      }
+
+      button {
+        padding: 8px 16px;
+        background: navy;
+        color: white;
+        border: none;
+        cursor: pointer;
+      }
+
+      button:hover {
+        background: darkblue;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+      }
+
+      th,
+      td {
+        border: 1px solid #ccc;
+        padding: 8px;
+        text-align: left;
+      }
+
+      th {
+        background: #eee;
+      }
+
+      tr:hover {
+        background: #f9f9f9;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="form-container">
+      <h1>도서 등록</h1>
+
+      <form class="form-grid">
+        <div class="form-group">
+          <label for="title">제목:</label>
+          <input type="text" id="title" name="title" />
+        </div>
+        <div class="form-group">
+          <label for="author">저자:</label>
+          <input type="text" id="author" name="author" />
+        </div>
+        <!-- 나머지 필드 동일 -->
+        <button type="submit">등록</button>
+      </form>
+    </div>
+  </body>
+</html>

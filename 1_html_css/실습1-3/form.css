@@ -1,0 +1,31 @@
+.form-container {
+  width: 400px;
+  margin: 20px auto;
+}
+.form-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.form-group {
+  display: flex;
+  justify-content: space-between;
+}
+.form-group label {
+  width: 80px;
+  font-weight: bold;
+}
+.form-group input {
+  flex: 1;
+  padding: 5px;
+}
+button {
+  padding: 8px 16px;
+  background: navy;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+button:hover {
+  background: darkblue;
+}
