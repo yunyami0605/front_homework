@@ -11,18 +11,100 @@
     <div class="form-container">
       <h1>도서 등록</h1>
 
-      <form class="form-grid">
+      <form class="form-grid" id="book-form">
         <div class="form-group">
           <label for="title">제목:</label>
           <input type="text" id="title" name="title" />
         </div>
+
         <div class="form-group">
           <label for="author">저자:</label>
           <input type="text" id="author" name="author" />
         </div>
 
+        <div class="form-group">
+          <label for="isbn">isbn:</label>
+          <input type="text" id="isbn" name="isbn" />
+        </div>
+
+        <div class="form-group">
+          <label for="price">가격:</label>
+          <input type="text" name="price" id="price" />
+        </div>
+
+        <div class="form-group">
+          <label for="publishDate">출판일:</label>
+          <input type="date" name="publishDate" id="publishDate" />
+        </div>
+
         <button type="submit">등록</button>
       </form>
     </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        loadBooks();
+      });
+
+      const bookForm = document.getElementById("book-form");
+
+      bookForm.addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        const form = event.target;
+        const formData = new FormData(form);
+
+        const bookData = {
+          title: formData.get("title").trim(),
+          author: formData.get("author").trim(),
+          isbn: formData.get("isbn").trim(),
+          price: formData.get("price").trim(),
+          publishDate: formData.get("publishDate").trim(),
+          // detailRequest: formData.get("detailRequest"),
+        };
+
+        createBooks(bookData);
+      });
+
+      function loadBooks() {
+        console.log("책 목록 Load 중.....");
+      }
+
+      function createBooks(bookData) {
+        const API_BASE_URL = "http://localhost:8080";
+
+        fetch(`${API_BASE_URL}/api/books`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(bookData),
+        })
+          .then(async (response) => {
+            if (!response.ok) {
+              const errorData = await response.json();
+              if (response.status === 409) {
+                //중복 오류 처리
+                throw new Error(
+                  errorData.message || "중복 되는 정보가 있습니다."
+                );
+              } else {
+                //기타 오류 처리
+                throw new Error(
+                  errorData.message || "도서 등록에 실패했습니다."
+                );
+              }
+            }
+            return response.json();
+          })
+          .then((result) => {
+            bookForm.reset();
+
+            loadBooks();
+          })
+          .catch((error) => {
+            console.log("Error : ", error);
+            alert(error.message);
+          });
+      }
+    </script>
   </body>
 </html>
