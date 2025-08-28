@@ -1,4 +1,4 @@
-var editingId = null;
+var editingBookId = null;
 
 document.addEventListener("DOMContentLoaded", function () {
   loadBooks();
@@ -25,12 +25,12 @@ bookForm.addEventListener("submit", function (event) {
     return;
   }
 
-  if (editingId) {
+  if (editingBookId) {
     // 수정 모드
-    editBook(editingId, bookData);
+    updateBook(editingBookId, bookData);
   } else {
     // 등록 모드
-    createBooks(bookData);
+    createBook(bookData);
   }
 });
 
@@ -79,7 +79,7 @@ function renderTable(books) {
                     <td>${book.price}</td>
                     <td>${book.publishDate}</td>
                     <td>
-                        <button class="edit-btn" onclick="editButtonClick(${book.id})">수정</button>
+                        <button class="edit-btn" onclick="editBook(${book.id})">등록</button>
                         <button class="delete-btn" onclick="deleteBook(${book.id},'${book.title}')">삭제</button>
                     </td>
                 `;
@@ -88,7 +88,7 @@ function renderTable(books) {
   });
 }
 
-function createBooks(bookData) {
+function createBook(bookData) {
   fetch(`${API_BASE_URL}/api/books`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -120,7 +120,7 @@ function createBooks(bookData) {
 
 // 삭제 함수
 function deleteBook(id, title) {
-  if (!confirm(`제목 = ${title} 학생을 정말로 삭제하시겠습니까?`)) {
+  if (!confirm(`제목 = ${title}을 정말로 삭제하시겠습니까?`)) {
     return;
   }
 
@@ -145,7 +145,7 @@ function deleteBook(id, title) {
   });
 }
 
-function editButtonClick(id) {
+function editBook(id) {
   //
   fetch(`${API_BASE_URL}/api/books/${id}`)
     .then(async (response) => {
@@ -168,7 +168,7 @@ function editButtonClick(id) {
       let cancelButton = document.getElementById("cancel-button");
       console.log(cancelButton);
 
-      editingId = id;
+      editingBookId = id;
       submitButton.textContent = "수정";
       cancelButton.style.display = "inline-block";
     })
@@ -178,8 +178,8 @@ function editButtonClick(id) {
     });
 }
 
-//학생 수정전에 데이터를 로드하는 함수
-function editBook(id, bookData) {
+// 실제 수정 함수
+function updateBook(id, bookData) {
   fetch(`${API_BASE_URL}/api/books/${id}`, {
     method: "PATCH",
     headers: { "Content-Type": "application/json" },
@@ -200,7 +200,7 @@ function editBook(id, bookData) {
       loadBooks();
 
       bookForm.reset();
-      editingId = null;
+      editingBookId = null;
 
       document.getElementById("submit-button").textContent = "등록";
       document.getElementById("cancel-button").style.display = "none";
