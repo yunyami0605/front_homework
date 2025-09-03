@@ -1,0 +1,33 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 44px;
+  padding: 44px;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+
+  .field_line {
+    display: flex;
+    gap: 24px;
+  }
+
+  .dummy_field {
+    flex: 1;
+  }
+}
+
+.button {
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+
+  &:hover {
+    background: #0056b3;
+  }
+}
